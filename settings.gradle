@@ -1,0 +1,3 @@
+rootProject.name = 'LinkDefendr'
+include 'backend'
+include 'frontend'

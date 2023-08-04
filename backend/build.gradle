@@ -1,0 +1,60 @@
+plugins {
+    id 'org.springframework.boot' version '3.1.1'
+    id 'io.spring.dependency-management' version '1.1.2'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.0'
+    id "org.jetbrains.kotlin.plugin.noarg" version "1.9.0"
+    id "org.jetbrains.kotlin.kapt" version "1.9.0"
+}
+
+group = 'xyz.poeschl.linkdefendr'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('testcontainersVersion', "1.17.6")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    implementation 'io.github.oshai:kotlin-logging-jvm:5.0.1'
+
+    kapt 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+    }
+}
+
+noArg {
+    annotation("jakarta.persistence.Entity")
+}
+
+kapt {
+    arguments {
+        arg('mapstruct.defaultComponentModel', 'spring')
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
