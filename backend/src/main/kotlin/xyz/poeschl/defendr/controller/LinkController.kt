@@ -10,6 +10,7 @@ import xyz.poeschl.defendr.dtos.LinkDtoMapper
 import xyz.poeschl.defendr.dtos.NewLinkDto
 import xyz.poeschl.defendr.exceptions.NotFoundException
 import xyz.poeschl.defendr.repositories.LinkRepository
+import xyz.poeschl.defendr.services.RedirectionService
 import java.util.*
 
 @RestController
@@ -17,7 +18,8 @@ import java.util.*
 @Transactional
 class LinkController(
   private val linkDtoMapper: LinkDtoMapper,
-  private val linkRepository: LinkRepository
+  private val linkRepository: LinkRepository,
+  private val redirectionService: RedirectionService
 ) {
 
   companion object {
@@ -40,7 +42,9 @@ class LinkController(
   @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
   @Transactional
   fun save(@RequestBody input: NewLinkDto): LinkDto {
-    val saved = linkRepository.save(linkDtoMapper.fromNewDto(input))
+    val fullDto = linkRepository.save(linkDtoMapper.fromNewDto(input))
+    fullDto.redirectPath = redirectionService.getRedirectPathForLink(fullDto)
+    val saved = linkRepository.save(fullDto)
     return linkDtoMapper.toDto(saved)
   }
 

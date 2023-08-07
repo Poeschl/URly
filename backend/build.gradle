@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation 'io.github.oshai:kotlin-logging-jvm:5.0.2'
+    implementation "org.hashids:hashids:1.0.3"
 
     kapt 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 

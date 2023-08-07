@@ -12,7 +12,13 @@ The registered link can be customized to be tracked with [Plausible](https://pla
 
 ## Setup
 
-👉 TBD
+The preferred setup is via the provided docker-compose file.
+It will provide all necessary environment variables and the right configuration of LinkDefendr.
+
+For the backend there are some environment variables which needs to be set:
+
+* `LINKDEFENDR_HASH_SECRET` - This can be any string and will affect the tokens we will generate.
+  If not set, your short-codes can be reused on any other LinkDefendr instance.
 
 ## Note
 
