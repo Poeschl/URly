@@ -9,7 +9,7 @@ services:
       - "--providers.file.directory=/config"
       - '--entrypoints.web.address=:8888'
       - '--accesslog=true'
-      - '--providers.docker.network=lemon_network'
+      - '--providers.docker.network=linkdefendr_default'
     network_mode: host
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock:ro'
