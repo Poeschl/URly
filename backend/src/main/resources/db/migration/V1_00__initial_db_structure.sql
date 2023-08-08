@@ -7,6 +7,6 @@ CREATE TABLE links
     type          varchar DEFAULT 'SHORT'                           NOT NULL,
     tracking      boolean DEFAULT FALSE                             NOT NULL,
     defending     boolean DEFAULT FALSE                             NOT NULL,
-
+    created_at    timestamp                                         NOT NULL,
     PRIMARY KEY (id)
 );

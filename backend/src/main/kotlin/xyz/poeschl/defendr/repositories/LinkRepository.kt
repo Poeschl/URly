@@ -1,10 +1,12 @@
 package xyz.poeschl.defendr.repositories
 
 import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import xyz.poeschl.defendr.enums.LinkType
+import java.time.ZonedDateTime
 
 @Repository
 interface LinkRepository : CrudRepository<Link, Long> {
@@ -20,5 +22,5 @@ data class Link(
   @Enumerated(EnumType.STRING) @Column(name = "type") var type: LinkType,
   @Column(name = "tracking") var tracking: Boolean,
   @Column(name = "defending") var defending: Boolean,
-
+  @CreatedDate @Column(name = "created_at") var createdAt: ZonedDateTime
   )
