@@ -1,6 +1,7 @@
 package xyz.poeschl.defendr.controller
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import xyz.poeschl.defendr.repositories.Link
 import xyz.poeschl.defendr.repositories.LinkRepository
+import xyz.poeschl.defendr.services.PlausibleService
 import xyz.poeschl.defendr.services.RedirectionService
 import java.net.URI
 import java.net.URLEncoder
@@ -16,6 +18,7 @@ import java.nio.charset.StandardCharsets
 @Controller
 class RedirectController(
   val redirectionService: RedirectionService,
+  val plausibleService: PlausibleService,
   val linkRepository: LinkRepository
 ) {
 
@@ -26,15 +29,19 @@ class RedirectController(
   }
 
   @GetMapping("/s/{token}")
-  fun redirectShortcode(@PathVariable token: String): ResponseEntity<Void> {
+  fun redirectShortcode(@PathVariable token: String, request: HttpServletRequest): ResponseEntity<Void> {
     val linkId = redirectionService.getLinkIdOfToken(token)
 
     linkId?.let { existingLinkId ->
       val link: Link? = linkRepository.findById(existingLinkId).orElse(null)
       link?.let { existingLink ->
 
+        if (existingLink.tracking) {
+          plausibleService.sendEventForRequest(request)
+        }
+
         if (existingLink.defending) {
-          LOGGER.debug { "Use defender for ${link.redirectPath}" }
+          LOGGER.debug { "Use defender for ${link.originalUrl}" }
           val encodedUrl = URLEncoder.encode(link.originalUrl, StandardCharsets.UTF_8)
 
           return ResponseEntity
@@ -42,7 +49,7 @@ class RedirectController(
             .location(URI.create(DEFENDER_REDIRECT_PATTERN.format(encodedUrl)))
             .build()
         } else {
-          LOGGER.debug { "Redirecting ${link.redirectPath}" }
+          LOGGER.debug { "Redirecting to ${link.originalUrl}" }
           return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(existingLink.originalUrl)).build()
         }
       }

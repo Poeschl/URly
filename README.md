@@ -19,6 +19,11 @@ For the backend there are some environment variables which needs to be set:
 
 * `LINKDEFENDR_HASH_SECRET` - This can be any string and will affect the tokens we will generate.
   If not set, your short-codes can be reused on any other LinkDefendr instance.
+* `LINKDEFENDR_PLAUSIBLE_ENABLED` - Enables the tracking via Plausible.
+  If this is not enabled the tracking of links will not work.
+* `LINKDEFENDR_PLAUSIBLE_DOMAIN` - The domain which was inserted into Plausible.
+* `LINKDEFENDR_PLAUSIBLE_API_HOST` - An custom Plausible api host, if you are not using `https://plausible.io`.
+  (This should always include the protocol, like `https://mytrack.example`)
 
 ## Note
 
