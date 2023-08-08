@@ -5,12 +5,14 @@ import org.hashids.Hashids
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import xyz.poeschl.defendr.repositories.Link
+import java.util.*
 
 @Service
 class RedirectionService {
 
   companion object {
     private val LOGGER = KotlinLogging.logger { }
+    private const val TOKEN_PATH = "/s/"
     private const val DEFAULT_TOKEN_LENGTH = 6
   }
 
@@ -20,7 +22,7 @@ class RedirectionService {
   private val hashIds = Hashids(hashSecret, DEFAULT_TOKEN_LENGTH)
 
   fun getRedirectPathForLink(link: Link): String {
-    return getRedirectionPrefix(link) + getTokenForLinkId(link.id!!)
+    return TOKEN_PATH + getTokenForLinkId(link.id!!)
   }
 
   fun getLinkIdOfToken(token: String): Long? {
@@ -29,13 +31,5 @@ class RedirectionService {
 
   private fun getTokenForLinkId(id: Long): String {
     return hashIds.encode(id)
-  }
-
-  private fun getRedirectionPrefix(link: Link): String {
-    return when {
-      link.lengthening -> "/l/"
-      link.defending -> "/d/"
-      else -> "/r/"
-    }
   }
 }

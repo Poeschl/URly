@@ -15,3 +15,7 @@ springdoc:
     path: "/rest/swagger-ui"
   api-docs:
     path: "/rest/v3/api-docs"
+
+logging:
+  level:
+    xyz.poeschl.defendr: DEBUG

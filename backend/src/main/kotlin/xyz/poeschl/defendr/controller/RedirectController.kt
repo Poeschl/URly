@@ -1,6 +1,6 @@
 package xyz.poeschl.defendr.controller
 
-import org.springframework.http.ResponseEntity
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,29 +15,23 @@ class RedirectController(
 ) {
 
   companion object {
-    private val NOT_FOUND_REDIRECT = "https://http.cat/status/404"
+    private const val NOT_FOUND_REDIRECT = "https://http.cat/status/404"
+    private val LOGGER = KotlinLogging.logger { }
   }
 
-  @GetMapping("/r/{token}")
+  @GetMapping("/s/{token}")
   fun redirectShortcode(@PathVariable token: String): String {
     val linkId = redirectionService.getLinkIdOfToken(token)
 
-    val url = if (linkId != null) {
-      linkRepository.findById(linkId).map(Link::originalUrl).orElse(NOT_FOUND_REDIRECT)
-    } else {
-      NOT_FOUND_REDIRECT
+    linkId?.let { existingLinkId ->
+      val link: Link? = linkRepository.findById(existingLinkId).orElse(null)
+      link?.let { existingLink ->
+
+        LOGGER.debug { "Redirecting ${link.redirectPath}" }
+        return "redirect:${existingLink.originalUrl}"
+      }
     }
-
-    return "redirect:${url}"
-  }
-
-  @GetMapping("/l/{token}")
-  fun redirectLongCode(@PathVariable token: String): ResponseEntity<Void> {
-    return ResponseEntity.status(418).build()
-  }
-
-  @GetMapping("/d/{token}")
-  fun redirectDefender(@PathVariable token: String): ResponseEntity<Void> {
-    return ResponseEntity.status(418).build()
+    LOGGER.warn { "Rejecting token '${token}'" }
+    return "redirect:${NOT_FOUND_REDIRECT}"
   }
 }
