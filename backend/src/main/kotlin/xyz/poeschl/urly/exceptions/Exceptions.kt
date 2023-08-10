@@ -1,4 +1,4 @@
-package xyz.poeschl.defendr.exceptions
+package xyz.poeschl.urly.exceptions
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException

@@ -1,4 +1,4 @@
-package xyz.poeschl.defendr.controller
+package xyz.poeschl.urly.controller
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
-import xyz.poeschl.defendr.repositories.Link
-import xyz.poeschl.defendr.repositories.LinkRepository
-import xyz.poeschl.defendr.services.PlausibleService
-import xyz.poeschl.defendr.services.RedirectionService
+import xyz.poeschl.urly.repositories.Link
+import xyz.poeschl.urly.repositories.LinkRepository
+import xyz.poeschl.urly.services.PlausibleService
+import xyz.poeschl.urly.services.RedirectionService
 import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets

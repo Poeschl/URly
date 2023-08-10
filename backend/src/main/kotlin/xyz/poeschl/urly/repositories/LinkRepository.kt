@@ -1,11 +1,11 @@
-package xyz.poeschl.defendr.repositories
+package xyz.poeschl.urly.repositories
 
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import xyz.poeschl.defendr.enums.LinkType
+import xyz.poeschl.urly.enums.LinkType
 import java.time.ZonedDateTime
 
 @Repository

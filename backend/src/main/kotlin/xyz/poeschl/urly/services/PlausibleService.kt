@@ -1,4 +1,4 @@
-package xyz.poeschl.defendr.services
+package xyz.poeschl.urly.services
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct

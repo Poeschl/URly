@@ -1,9 +1,9 @@
-package xyz.poeschl.defendr.dtos
+package xyz.poeschl.urly.dtos
 
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
-import xyz.poeschl.defendr.enums.LinkType
-import xyz.poeschl.defendr.repositories.Link
+import xyz.poeschl.urly.enums.LinkType
+import xyz.poeschl.urly.repositories.Link
 import java.time.ZonedDateTime
 
 data class LinkDto(

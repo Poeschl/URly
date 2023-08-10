@@ -1,11 +1,11 @@
-package xyz.poeschl.defendr.services
+package xyz.poeschl.urly.services
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.hashids.Hashids
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import xyz.poeschl.defendr.enums.LinkType
-import xyz.poeschl.defendr.repositories.Link
+import xyz.poeschl.urly.enums.LinkType
+import xyz.poeschl.urly.repositories.Link
 import java.util.*
 
 @Service

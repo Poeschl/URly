@@ -1,12 +1,12 @@
-package xyz.poeschl.defendr
+package xyz.poeschl.urly
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 
 @SpringBootApplication
-class DefendrApplication
+class UrlyApplication
 
 fun main(args: Array<String>) {
-  runApplication<DefendrApplication>(*args)
+  runApplication<UrlyApplication>(*args)
 }

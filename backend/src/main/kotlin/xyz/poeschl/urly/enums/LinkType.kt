@@ -1,4 +1,4 @@
-package xyz.poeschl.defendr.enums
+package xyz.poeschl.urly.enums
 
 enum class LinkType {
   SHORT, LONG
