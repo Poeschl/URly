@@ -46,7 +46,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/poeschl/link-defendr:backend
+          images: ghcr.io/poeschl/urly:backend
 
       - name: 🏗️ Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -64,5 +64,5 @@ jobs:
           context: backend
           file: backend/Dockerfile
           push: true
-          tags: ghcr.io/poeschl/link-defendr:backend
+          tags: ghcr.io/poeschl/urly:backend
           labels: ${{ steps.docker_meta.outputs.labels }}

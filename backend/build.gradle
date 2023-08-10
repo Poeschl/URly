@@ -7,7 +7,7 @@ plugins {
     id "org.jetbrains.kotlin.kapt" version "1.9.0"
 }
 
-group = 'xyz.poeschl.linkdefendr'
+group = 'xyz.poeschl.urly'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 

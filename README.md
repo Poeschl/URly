@@ -1,7 +1,8 @@
-# LinkDefendr
+# URly
 
 This software is a self-hosted url-shortener with a view quirks.
-The registered link can be customized to be tracked with [Plausible](https://plausible.io/), extend the Link (url-lenghtener) or has a "Defender" mode.
+The registered link can be customized to be tracked, extended, defended and maybe more.
+See the features below.
 
 ## Features
 
@@ -13,16 +14,16 @@ The registered link can be customized to be tracked with [Plausible](https://pla
 ## Setup
 
 The preferred setup is via the provided docker-compose file.
-It will provide all necessary environment variables and the right configuration of LinkDefendr.
+It will provide all necessary environment variables and the right configuration of URly.
 
 For the backend there are some environment variables which needs to be set:
 
-* `LINKDEFENDR_HASH_SECRET` - This can be any string and will affect the tokens we will generate.
-  If not set, your short-codes can be reused on any other LinkDefendr instance.
-* `LINKDEFENDR_PLAUSIBLE_ENABLED` - Enables the tracking via Plausible.
+* `URLY_HASH_SECRET` - This can be any string and will affect the tokens we will generate.
+  If not set, your short-codes can be reused on any other URly instance.
+* `URLY_PLAUSIBLE_ENABLED` - Enables the tracking via Plausible.
   If this is not enabled the tracking of links will not work.
-* `LINKDEFENDR_PLAUSIBLE_DOMAIN` - The domain which was inserted into Plausible.
-* `LINKDEFENDR_PLAUSIBLE_API_HOST` - An custom Plausible api host, if you are not using `https://plausible.io`.
+* `URLY_PLAUSIBLE_DOMAIN` - The domain which was inserted into Plausible.
+* `URLY_PLAUSIBLE_API_HOST` - An custom Plausible api host, if you are not using `https://plausible.io`.
   (This should always include the protocol, like `https://mytrack.example`)
 
 ## Note

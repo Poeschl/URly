@@ -16,13 +16,13 @@ class PlausibleService {
     private const val PLAUSIBLE_EVENT_PATH_PATTERN = "%s/api/event"
   }
 
-  @Value("\${LINKDEFENDR_PLAUSIBLE_ENABLED:false}")
+  @Value("\${URLY_PLAUSIBLE_ENABLED:false}")
   private val enabled = false
 
-  @Value("\${LINKDEFENDR_PLAUSIBLE_DOMAIN:''}")
+  @Value("\${URLY_PLAUSIBLE_DOMAIN:''}")
   private val domain = ""
 
-  @Value("\${LINKDEFENDR_PLAUSIBLE_API_HOST:'https://plausible.io'}")
+  @Value("\${URLY_PLAUSIBLE_API_HOST:'https://plausible.io'}")
   private val apiHost = "https://plausible.io"
 
   private val restTemplate = RestTemplate()

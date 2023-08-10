@@ -20,7 +20,7 @@ class RedirectionService {
     private const val SHORT_PREFIX = "s"
   }
 
-  @Value("\${LINKDEFENDR_HASH_SECRET:'Not very secret'}")
+  @Value("\${URLY_HASH_SECRET:'Not very secret'}")
   private val hashSecret = ""
 
   private val shortHashIds = Hashids(hashSecret + LONG_PREFIX, DEFAULT_TOKEN_LENGTH)
