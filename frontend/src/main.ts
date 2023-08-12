@@ -7,7 +7,6 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {createPinia} from "pinia";
 import {faArrowDown, faArrowRight, faChartLine, faEdit, faPlus, faShieldHalved} from "@fortawesome/free-solid-svg-icons";
 import {faCopy, faTrashCan} from "@fortawesome/free-regular-svg-icons";
-import * as bulmaToast from 'bulma-toast'
 
 const app = createApp(App)
 
@@ -18,10 +17,5 @@ app.use(router)
 
 const pinia = createPinia()
 app.use(pinia)
-
-bulmaToast.setDefaults({
-  duration: 1500,
-  pauseOnHover: true
-})
 
 app.mount('#app')

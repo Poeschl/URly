@@ -11,7 +11,7 @@
       <div class="level-item">
         <button
           class="button is-primary"
-          @click="openEditModal(null)"
+          @click="openCreationModal()"
         >
           <span class="icon">
             <FontAwesomeIcon
@@ -24,21 +24,65 @@
       </div>
     </div>
   </div>
-  <LinkList :links="links"/>
+  <LinkList
+    :links="links"
+    @clicked:delete="deleteLink"
+  />
+
+  <LinkModal
+    v-if="showCreateModal"
+    :link="modalLink"
+    @close="closeCreationModal"
+    @update:link="saveNewLink"
+  />
 </template>
 
 <script setup lang="ts">
 import LinkList from "@/components/LinkList.vue";
 import {useLinkStore} from "@/stores/LinkStore";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import type Link from "@/models/Link";
+import {createEmptyLink} from "@/models/Link";
+import LinkModal from "@/components/LinkModal.vue";
+import {toast} from "bulma-toast";
+import copy from "copy-text-to-clipboard";
 
 const linkStore = useLinkStore()
 
 const links = computed<Link[]>(() => linkStore.links)
 
+const showCreateModal = ref(false)
+const modalLink = ref<Link>(createEmptyLink())
+
 onMounted(() => {
   linkStore.updateLinks()
 })
 
+function openCreationModal() {
+  modalLink.value = createEmptyLink()
+  showCreateModal.value = true
+}
+
+function closeCreationModal() {
+  showCreateModal.value = false
+}
+
+function saveNewLink(link: Link) {
+  linkStore.saveLink(link)
+    .then((link: Link) => {
+      const url = window.location.origin + link.redirectPath
+      copy(url)
+      toast({message: "Copied created link into clipboard.", type: "is-success"})
+    })
+  closeCreationModal()
+}
+
+function deleteLink(link: Link) {
+  linkStore.deleteLink(link)
+    .then((link: Link) => {
+      const url = window.location.origin + link.redirectPath
+      copy(url)
+      toast({message: "Link successfully deleted.", type: "is-success"})
+    })
+}
 </script>

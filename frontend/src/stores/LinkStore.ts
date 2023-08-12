@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 import type Link from "@/models/Link";
-import {LinkType} from "@/models/Link";
+import {createEmptyLink, LinkType} from "@/models/Link";
 
 export const useLinkStore = defineStore('linkStore', () => {
   const links = ref<Link[]>([])
@@ -44,9 +44,36 @@ export const useLinkStore = defineStore('linkStore', () => {
         tracking: false,
         defending: false,
         createdAt: new Date(2023, 8, 11, 10, 30)
-      }
+      },
+      {
+        id: 5,
+        redirectPath: '/s/s908jgfdgpiodsfhjpvoiastjpmoimuvpoivuporiemcujpoitujmpaoeniubpoicumptoiumcpaoriubnspoizbunwp98vcupmeoriczuwpoizu5pn',
+        originalUrl: 'https://bulma.io/documentation/elements/box/ans/asd/asdfvipnwsgpoijcn/asdfgafg6516516/asfdgoihpoiubn?=234t9h',
+        type: LinkType.SHORT,
+        tracking: true,
+        defending: true,
+        createdAt: new Date(2023, 8, 10, 10, 30)
+      },
     ]
   }
 
-  return {links, updateLinks}
+  function saveLink(link: Link): Promise<Link> {
+    console.warn("Save not implemented. " + JSON.stringify(link))
+    return new Promise((resolve, reject) => {
+      const dummy = createEmptyLink()
+      dummy.redirectPath = "/dummy/1234"
+      resolve(dummy)
+    })
+  }
+
+  function deleteLink(link: Link): Promise<Link> {
+    console.warn("Delete not implemented. " + JSON.stringify(link))
+    return new Promise((resolve, reject) => {
+      const dummy = createEmptyLink()
+      dummy.redirectPath = "/dummy/1234"
+      resolve(dummy)
+    })
+  }
+
+  return {links, updateLinks, saveLink, deleteLink}
 })

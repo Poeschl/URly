@@ -3,7 +3,8 @@
     <LinkListElement
       v-for="currentLink in links"
       :key="currentLink.id"
-      :link="currentLink"/>
+      :link="currentLink"
+      @clicked:delete="$emit('clicked:delete', $event)"/>
   </div>
 </template>
 

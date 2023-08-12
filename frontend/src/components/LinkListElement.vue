@@ -52,7 +52,10 @@
 
     <div class="list-item-controls">
       <div class="buttons is-right">
-        <button class="button">
+        <button
+          class="button"
+          @click="deleteLink"
+        >
           <FontAwesomeIcon
             class="is-small has-text-danger"
             icon="fa-regular fa-trash-can"
@@ -73,7 +76,7 @@ const props = defineProps<{
   link: Link
 }>()
 
-defineEmits<{
+const emits = defineEmits<{
   (e: 'clicked:delete', val: Link): void
 }>()
 
@@ -83,6 +86,9 @@ function copyClicked() {
   toast({message: 'Link copied into clipboard', type: 'is-success'})
 }
 
+function deleteLink() {
+  emits('clicked:delete', props.link)
+}
 </script>
 
 <style scoped lang="scss">
@@ -99,7 +105,11 @@ function copyClicked() {
     max-width: 12rem;
   }
 
-  max-width: 20rem;
+  @media screen and (min-width: $tablet) and (max-width: $desktop - 1px) {
+    max-width: 16rem;
+  }
+
+  max-width: 24rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
