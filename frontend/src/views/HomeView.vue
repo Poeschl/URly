@@ -24,9 +24,21 @@
       </div>
     </div>
   </div>
-  <LinkList/>
+  <LinkList :links="links"/>
 </template>
 
 <script setup lang="ts">
 import LinkList from "@/components/LinkList.vue";
+import {useLinkStore} from "@/stores/LinkStore";
+import {computed, onMounted} from "vue";
+import type Link from "@/models/Link";
+
+const linkStore = useLinkStore()
+
+const links = computed<Link[]>(() => linkStore.links)
+
+onMounted(() => {
+  linkStore.updateLinks()
+})
+
 </script>

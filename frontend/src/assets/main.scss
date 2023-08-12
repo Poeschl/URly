@@ -1,23 +1,6 @@
 @import "minireset.css/minireset";
 
-$primary: #ab2424;
-$red: #e74c3c;
-
-$grey-lighter: #e0e0e0;
-$grey-light: #a8a8a8;
-$link: $red;
-
-@import "darkly-variables";
-
-$bulmaswatch-import-font: false;
-$radius: 4px;
-
-$body-background-color: #2d2d2d;
-
-$column-gap: 1rem;
-
-$input-background-color: #494949;
-$input-color: $white-ter;
+@import "custom-variables";
 
 @import "bulma/bulma";
 @import "bulma-list-overwrites";

@@ -1,13 +1,24 @@
 <template>
-  <div class="list">
-    <LinkListElement/>
-    <LinkListElement/>
-    <LinkListElement/>
+  <div class="list has-visible-pointer-controls">
+    <LinkListElement
+      v-for="currentLink in links"
+      :key="currentLink.id"
+      :link="currentLink"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import LinkListElement from "@/components/LinkListElement.vue";
+import type Link from "@/models/Link";
+
+const props = defineProps<{
+  links: Link[]
+}>()
+
+defineEmits<{
+  (e: 'clicked:delete', val: Link): void
+}>()
+
 </script>
 
 <style scoped>
