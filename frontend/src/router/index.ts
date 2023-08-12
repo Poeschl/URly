@@ -6,7 +6,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+    },
+    {
+      path: "/%F0%9F%95%B5", // the encoded 🕵
+      name: 'defender',
+      component: () => import('../views/DefenderView.vue')
     }
   ]
 })
