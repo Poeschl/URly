@@ -1,78 +1,44 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 import type Link from "@/models/Link";
-import {createEmptyLink, LinkType} from "@/models/Link";
+import LinkService from "@/services/LinkService";
 
+const linkService = new LinkService()
 export const useLinkStore = defineStore('linkStore', () => {
   const links = ref<Link[]>([])
 
   function updateLinks() {
-    links.value = []
-    links.value = [
-      {
-        id: 1,
-        redirectPath: '/s/s5inve09',
-        originalUrl: 'https://poeschl.xyz',
-        type: LinkType.SHORT,
-        tracking: true,
-        defending: false,
-        createdAt: new Date(2023, 8, 10, 10, 10)
-      },
-      {
-        id: 2,
-        redirectPath: '/s/lsn9ß2jbß9incgp98jvßm90duß09wuv4ß9uiareßmv09u8bvmßw9vuqßt098paich0928h0ß9a8hcpna98ebzup90c8u3p98h9p3485c0ß98hvbpvhgmpaoihuvßq309vuscß8uß4c90ußq09uvß5inve09',
-        originalUrl: 'https://google.de',
-        type: LinkType.LONG,
-        tracking: false,
-        defending: true,
-        createdAt: new Date(2023, 8, 10, 10, 20)
-      },
-      {
-        id: 3,
-        redirectPath: '/s/s908jg5pn',
-        originalUrl: 'https://bulma.io/documentation/elements/box/ans/asd/asdfvipnwsgpoijcn/asdfgafg6516516/asfdgoihpoiubn?=234t9h',
-        type: LinkType.SHORT,
-        tracking: true,
-        defending: true,
-        createdAt: new Date(2023, 8, 10, 10, 30)
-      },
-      {
-        id: 4,
-        redirectPath: '/s/s9n0bqui',
-        originalUrl: 'https://chaos.social.de',
-        type: LinkType.SHORT,
-        tracking: false,
-        defending: false,
-        createdAt: new Date(2023, 8, 11, 10, 30)
-      },
-      {
-        id: 5,
-        redirectPath: '/s/s908jgfdgpiodsfhjpvoiastjpmoimuvpoivuporiemcujpoitujmpaoeniubpoicumptoiumcpaoriubnspoizbunwp98vcupmeoriczuwpoizu5pn',
-        originalUrl: 'https://bulma.io/documentation/elements/box/ans/asd/asdfvipnwsgpoijcn/asdfgafg6516516/asfdgoihpoiubn?=234t9h',
-        type: LinkType.SHORT,
-        tracking: true,
-        defending: true,
-        createdAt: new Date(2023, 8, 10, 10, 30)
-      },
-    ]
+    linkService.getAllLinks()
+      .then(response => {
+        links.value = []
+        links.value = response
+        return response
+      })
+      .catch(reason => {
+        console.error(`Could not get link list. (${reason})`)
+      })
   }
 
-  function saveLink(link: Link): Promise<Link> {
-    console.warn("Save not implemented. " + JSON.stringify(link))
-    return new Promise((resolve, reject) => {
-      const dummy = createEmptyLink()
-      dummy.redirectPath = "/dummy/1234"
-      resolve(dummy)
-    })
+  function saveLink(link: Link): Promise<Link | void> {
+    return linkService.saveLink(link)
+      .then(response => {
+        updateLinks()
+        return response
+      })
+      .catch((reason) => {
+        console.error(`Could not save link. (${reason})`)
+      })
   }
 
-  function deleteLink(link: Link): Promise<Link> {
-    console.warn("Delete not implemented. " + JSON.stringify(link))
-    return new Promise((resolve, reject) => {
-      const dummy = createEmptyLink()
-      dummy.redirectPath = "/dummy/1234"
-      resolve(dummy)
-    })
+  function deleteLink(link: Link): Promise<Link | void> {
+    return linkService.deleteLink(link)
+      .then(response => {
+        updateLinks()
+        return response
+      })
+      .catch((reason) => {
+        console.error(`Could not delete link. (${reason})`)
+      })
   }
 
   return {links, updateLinks, saveLink, deleteLink}
