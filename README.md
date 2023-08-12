@@ -1,14 +1,16 @@
 # URly
 
 This software is a self-hosted url-shortener with a view quirks.
-The registered link can be customized to be tracked, extended, defended and maybe more.
+The registered link can be customized to be tracked, defended and maybe more.
 See the features below.
+
+![The list of registered links](./docs/list.png)
+![The landing page for a defended link](./docs/defender.png)
 
 ## Features
 
-* Shortens any Link to a short-code with at least 6 digits
+* Shortens any Link to a short-code with at least 6 characters or to a long one (length of 1024 chars).
 * Allows tracking of the link click via Plausible
-* Url-lengthening - Expands the url to a really long path
 * Defender-Mode - Forwards the user to a few "Checking link" pages. "Like a defender does"
 
 ## Setup
