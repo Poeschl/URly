@@ -5,7 +5,6 @@ The registered link can be customized to be tracked, defended and maybe more.
 See the features below.
 
 ![The list of registered links](./docs/list.png)
-![The landing page for a defended link](./docs/defender.png)
 
 ## Features
 
@@ -15,9 +14,13 @@ See the features below.
 
 ## Defender-Mode for Links
 
-The Defender mode is a pun against the Microsoft Cloud Defender which currently causes me some headache at work.
-So I decided to make a similar user experience which can be opt-in, but only wait some random time.
+![The landing page for a defended link](./docs/defender.png)
 
+The Defender mode is a pun against the Microsoft Cloud Defender which currently causes me some headache at work.
+So I decided to make a similar user experience which can be opt-in per Link.
+
+If enabled the user will be routed to a redirection page similar to the image above.
+After a few seconds a redirection to the real target takes place.
 There is no actual checking something. At least for now.
 
 ## Setup
