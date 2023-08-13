@@ -32,12 +32,15 @@
             help="Should this redirection should be tracked?"
             :checked="false"
             label="Track with Plausible"
-            v-model:value="link.tracking"/>
+            v-model:value="link.tracking"
+            :disabled="!configStore.plausibleConfig.enabled"
+          />
           <CheckboxInput
             help="Should this redirection should use the annoying Defender?"
             :checked="false"
             label="Use the Defender page"
-            v-model:value="link.defending"/>
+            v-model:value="link.defending"
+            :disabled="false"/>
 
         </div>
         <div class="card-footer">
@@ -63,9 +66,12 @@
 import TextInput from "@/components/form/TextInput.vue";
 import type Link from "@/models/Link";
 import {LinkType} from "@/models/Link";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import RadioInput from "@/components/form/RadioInput.vue";
 import CheckboxInput from "@/components/form/CheckboxInput.vue";
+import {useConfigStore} from "@/stores/ConfigStore";
+
+const configStore = useConfigStore()
 
 const props = defineProps<{
   link: Link
@@ -77,6 +83,7 @@ const emit = defineEmits<{
 }>()
 
 const link = ref<Link>(props.link)
+const isTrackingEnabled = computed<boolean>(() => configStore!!.plausibleConfig.enabled)
 
 const updateType = (linkType: string) => {
   link.value.type = LinkType[linkType as keyof typeof LinkType]

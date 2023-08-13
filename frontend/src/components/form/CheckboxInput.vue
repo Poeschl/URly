@@ -3,7 +3,8 @@
     <div class="control">
       <label class="checkbox">
         <input type="checkbox"
-               :checked="checked"
+               :checked="checkboxChecked"
+               :disabled="disabled"
                v-model="value">
         {{ label }}
       </label>
@@ -18,13 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 
 const props = defineProps<{
   label: string,
   value: boolean,
   checked: boolean,
-  help: string
+  help: string,
+  disabled: boolean
 }>()
 
 const emit = defineEmits<{
@@ -32,6 +34,14 @@ const emit = defineEmits<{
 }>()
 
 const value = ref<boolean>(props.value)
+
+const checkboxChecked = computed<boolean>(() => {
+  if (!props.disabled) {
+    return props.checked
+  } else {
+    return false
+  }
+})
 
 watch<boolean>(() => value.value, (after: boolean) => {
   emit('update:value', after)

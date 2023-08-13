@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import xyz.poeschl.urly.dtos.PlausibleInfoDto
 
 @Service
 class PlausibleService {
@@ -50,7 +51,7 @@ class PlausibleService {
     val entity = HttpEntity(event, headers)
 
     val response =
-      restTemplate.exchange(PLAUSIBLE_EVENT_PATH_PATTERN.format(apiHost), HttpMethod.POST, entity, Void::class.java)
+        restTemplate.exchange(PLAUSIBLE_EVENT_PATH_PATTERN.format(apiHost), HttpMethod.POST, entity, Void::class.java)
     LOGGER.debug { "Sent tracking event" }
 
     if (!response.statusCode.is2xxSuccessful) {
@@ -58,10 +59,20 @@ class PlausibleService {
     }
   }
 
+  fun getPlausibleInfo(): PlausibleInfoDto {
+    val dashboardUrl = if (enabled) {
+      "$apiHost/$domain"
+    } else {
+      ""
+    }
+
+    return PlausibleInfoDto(enabled, dashboardUrl)
+  }
+
   data class PlausibleEvent(
-    val url: String,
-    val domain: String,
-    val referrer: String,
-    val name: String = "pageview"
+      val url: String,
+      val domain: String,
+      val referrer: String,
+      val name: String = "pageview"
   )
 }

@@ -21,6 +21,20 @@
           </span>
           <span>Add new link</span>
         </button>
+        <a
+          class="button ml-2"
+          v-if="plausibleConfig.enabled"
+          :href="plausibleConfig.dashboard"
+          target="_blank"
+        >
+          <span>Plausible Dashboard</span>
+          <span class="icon">
+            <FontAwesomeIcon
+              class="is-small"
+              icon="fa-solid fa-up-right-from-square"
+            />
+          </span>
+        </a>
       </div>
     </div>
   </div>
@@ -46,16 +60,21 @@ import {createEmptyLink} from "@/models/Link";
 import LinkModal from "@/components/LinkModal.vue";
 import {toast} from "bulma-toast";
 import copy from "copy-text-to-clipboard";
+import {useConfigStore} from "@/stores/ConfigStore";
+import type PlausibleConfig from "@/models/PlausibleConfig";
 
 const linkStore = useLinkStore()
+const configStore = useConfigStore()
 
 const links = computed<Link[]>(() => linkStore.links)
+const plausibleConfig = computed<PlausibleConfig>(() => configStore.plausibleConfig)
 
 const showCreateModal = ref(false)
 const modalLink = ref<Link>(createEmptyLink())
 
 onMounted(() => {
   linkStore.updateLinks()
+  configStore.updateConfig()
 })
 
 function openCreationModal() {
