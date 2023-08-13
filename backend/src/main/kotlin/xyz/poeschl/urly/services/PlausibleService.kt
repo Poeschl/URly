@@ -20,10 +20,10 @@ class PlausibleService {
   @Value("\${URLY_PLAUSIBLE_ENABLED:false}")
   private val enabled = false
 
-  @Value("\${URLY_PLAUSIBLE_DOMAIN:''}")
+  @Value("\${URLY_PLAUSIBLE_DOMAIN:}")
   private val domain = ""
 
-  @Value("\${URLY_PLAUSIBLE_API_HOST:'https://plausible.io'}")
+  @Value("\${URLY_PLAUSIBLE_API_HOST:https://plausible.io}")
   private val apiHost = "https://plausible.io"
 
   private val restTemplate = RestTemplate()
@@ -45,9 +45,10 @@ class PlausibleService {
     val headers = HttpHeaders()
     headers.contentType = MediaType.APPLICATION_JSON
     headers.add("User-Agent", request.getHeader("User-Agent"))
-    headers.add("X-Forwarded-For", request.remoteAddr)
+    headers.add("X-Forwarded-For", request.remoteHost)
 
     val event = PlausibleEvent(request.requestURL.toString(), domain, request.getHeader("referer").orEmpty())
+    LOGGER.debug { "Plausible Event: $event; Headers: $headers" }
     val entity = HttpEntity(event, headers)
 
     val response =
