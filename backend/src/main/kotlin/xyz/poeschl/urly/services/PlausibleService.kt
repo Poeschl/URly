@@ -45,10 +45,9 @@ class PlausibleService {
     val headers = HttpHeaders()
     headers.contentType = MediaType.APPLICATION_JSON
     headers.add("User-Agent", request.getHeader("User-Agent"))
-    headers.add("X-Forwarded-For", request.remoteHost)
+    headers.add("X-Forwarded-For", request.getHeader("X-Forwarded-For") ?: request.remoteHost)
 
     val event = PlausibleEvent(request.requestURL.toString(), domain, request.getHeader("referer").orEmpty())
-    LOGGER.debug { "Plausible Event: $event; Headers: $headers" }
     val entity = HttpEntity(event, headers)
 
     val response =
