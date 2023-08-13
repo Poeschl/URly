@@ -13,6 +13,13 @@ See the features below.
 * Allows tracking of the link click via Plausible
 * Defender-Mode - Forwards the user to a few "Checking link" pages. "Like a defender does"
 
+## Defender-Mode for Links
+
+The Defender mode is a pun against the Microsoft Cloud Defender which currently causes me some headache at work.
+So I decided to make a similar user experience which can be opt-in, but only wait some random time.
+
+There is no actual checking something. At least for now.
+
 ## Setup
 
 The preferred setup is via the provided docker-compose (`deploy` folder) file.
