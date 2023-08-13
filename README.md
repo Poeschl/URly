@@ -32,9 +32,9 @@ __Note: This setup has no authentication build-in! You need to take care of this
 The paths to exclude from the authentication to make the links public available are:
 
 * `/s/`
-* `/%F0%9F%95%B5`
-* `/img/`
-* `/assets/`
+* `/d/` (Defender)
+* `/img/` (Defender)
+* `/assets/` (Defender)
 
 ## Note
 

@@ -9,7 +9,7 @@ const router = createRouter({
       component: () => import('../views/HomeView.vue'),
     },
     {
-      path: "/%F0%9F%95%B5", // the encoded 🕵
+      path: "/d/%F0%9F%95%B5", // the encoded 🕵
       name: 'defender',
       component: () => import('../views/DefenderView.vue')
     }

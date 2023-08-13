@@ -26,7 +26,7 @@ class RedirectController(
 
   companion object {
     private const val NOT_FOUND_REDIRECT = "https://http.cat/status/404"
-    private const val DEFENDER_REDIRECT_PATTERN = "/🕵?🌐=%s"
+    private const val DEFENDER_REDIRECT_PATTERN = "/d/🕵?🌐=%s"
     private val LOGGER = KotlinLogging.logger { }
   }
 
