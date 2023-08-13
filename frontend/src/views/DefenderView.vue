@@ -18,8 +18,11 @@
         </div>
         <div class="card-image">
           <figure class="image" :class="{ 'glitch': glitch }">
-            <img :src="imageToLoad" alt="Cat of this request">
+            <img class="is-radiusless" :src="imageToLoad" alt="Cat of this request">
           </figure>
+        </div>
+        <div class="is-flex is-justify-content-center p-3">
+          <p>Presented by <a href="https://github.com/Poeschl/URly">URly</a> and <a href="https://cataas.com">CATAAS</a></p>
         </div>
       </div>
     </div>
