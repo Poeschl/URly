@@ -1,6 +1,6 @@
 <template>
   <div class="level">
-    <div class="level-item">
+    <div class="level-item" :class="{ 'glitch': glitch }" ref="pageContainer">
       <progress v-if="imageLoading" class="progress is-loader is-large is-primary" max="100"></progress>
       <div v-if="!imageLoading" class="card">
         <div class="card-content">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="card-image">
-          <figure class="image">
+          <figure class="image" :class="{ 'glitch': glitch }">
             <img :src="imageToLoad" alt="Cat of this request">
           </figure>
         </div>
@@ -30,10 +30,14 @@
 import {useRoute} from "vue-router";
 import {onMounted, ref, watch} from "vue";
 import Elipsis from "@/components/ElipsisSpinner.vue";
+import RedirectionService from "@/services/RedirectionService";
 
 const route = useRoute()
+const redirecionService = new RedirectionService()
 
 const imageLoading = ref<boolean>(true)
+const glitch = ref<boolean>(false)
+
 const imageToLoad = "https://cataas.com/cat/cute"
 
 onMounted(() => {
@@ -49,8 +53,20 @@ watch<boolean>(() => imageLoading.value, (after: boolean) => {
 const doRedirect = () => {
   const redirectUrl = route.query['🌐'];
   if (redirectUrl != null && redirectUrl.length > 0) {
-    console.info("Redirect to " + redirectUrl)
-    window.location.href = redirectUrl.toString();
+    const decodedUrl = decodeURI(redirectUrl.toString())
+    redirecionService.checkLink(decodedUrl)
+      .then((exists: boolean) => {
+        if (exists) {
+          console.info("Redirect to " + redirectUrl)
+          window.location.href = redirectUrl.toString();
+        } else {
+          glitch.value = true
+        }
+      })
+      .catch(reason => {
+        console.error(`Could not check url. (${reason})`)
+        glitch.value = true
+      })
   }
 }
 
@@ -78,6 +94,8 @@ const getRandomWaitTime = (min: number, max: number): number => {
 </script>
 
 <style scoped lang="scss">
+@import "@/assets/glitch";
+
 .level-item {
   .title {
     margin-bottom: revert;
@@ -85,9 +103,15 @@ const getRandomWaitTime = (min: number, max: number): number => {
 }
 
 .card {
-  .card-image img {
-    max-height: 72vh;
-    object-fit: contain;
+  .card-image {
+    img {
+      max-height: 72vh;
+      object-fit: contain;
+    }
+
+    .glitch {
+      animation-delay: 2s;
+    }
   }
 }
 

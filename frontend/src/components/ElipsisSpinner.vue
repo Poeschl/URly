@@ -8,7 +8,7 @@
 </template>
 
 <style scoped lang="scss">
-@import "src/assets/custom-variables";
+@import "@/assets/custom-variables";
 
 .lds-ellipsis {
   display: inline-block;

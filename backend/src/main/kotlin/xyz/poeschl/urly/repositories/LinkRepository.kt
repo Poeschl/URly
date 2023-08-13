@@ -11,6 +11,8 @@ import java.time.ZonedDateTime
 @Repository
 interface LinkRepository : CrudRepository<Link, Long> {
   fun findAll(sort: Sort): List<Link>
+
+  fun existsByOriginalUrlAndDefending(string: String, defending: Boolean = true): Boolean
 }
 
 @Entity

@@ -3,10 +3,11 @@ package xyz.poeschl.urly.controller
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.*
+import xyz.poeschl.urly.dtos.CheckDto
 import xyz.poeschl.urly.repositories.Link
 import xyz.poeschl.urly.repositories.LinkRepository
 import xyz.poeschl.urly.services.PlausibleService
@@ -16,6 +17,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 @Controller
+@RequestMapping("/s")
 class RedirectController(
   val redirectionService: RedirectionService,
   val plausibleService: PlausibleService,
@@ -28,7 +30,7 @@ class RedirectController(
     private val LOGGER = KotlinLogging.logger { }
   }
 
-  @GetMapping("/s/{token}")
+  @GetMapping("/{token}")
   fun redirectShortcode(@PathVariable token: String, request: HttpServletRequest): ResponseEntity<Void> {
     val linkId = redirectionService.getLinkIdOfToken(token)
 
@@ -47,7 +49,7 @@ class RedirectController(
           return ResponseEntity
             .status(HttpStatus.FOUND)
             .location(URI.create(DEFENDER_REDIRECT_PATTERN.format(encodedUrl)))
-            .build()
+              .build()
         } else {
           LOGGER.debug { "Redirecting to ${link.originalUrl}" }
           return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(existingLink.originalUrl)).build()
@@ -56,5 +58,11 @@ class RedirectController(
     }
     LOGGER.warn { "Rejecting token '${token}'" }
     return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(NOT_FOUND_REDIRECT)).build()
+  }
+
+  @PostMapping("/check", consumes = [MediaType.APPLICATION_JSON_VALUE])
+  @ResponseBody
+  fun checkForKnownLink(@RequestBody check: CheckDto): Boolean {
+    return linkRepository.existsByOriginalUrlAndDefending(check.url)
   }
 }

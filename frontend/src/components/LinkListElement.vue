@@ -92,7 +92,7 @@ function deleteLink() {
 </script>
 
 <style scoped lang="scss">
-@import "src/assets/custom-variables";
+@import "@/assets/custom-variables";
 
 
 .list-item-content .level {
