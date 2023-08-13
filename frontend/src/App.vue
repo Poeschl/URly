@@ -19,7 +19,7 @@ onMounted(() => {
   console.info(`Swagger UI: ${window.location.origin}/rest/swagger-ui`)
 
   bulmaToast.setDefaults({
-    duration: 15000,
+    duration: 3000,
     pauseOnHover: true,
     appendTo: notificationContainer.value
   })
