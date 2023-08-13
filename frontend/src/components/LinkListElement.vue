@@ -28,21 +28,26 @@
             <div class="level-item is-truncate">{{ link.originalUrl }}</div>
           </div>
         </div>
-        <div class="level-item is-flex-grow-0">
-          <div class="level is-mobile">
-            <div class="level-item" :title="'Link Tracking: ' + link.tracking">
-              <FontAwesomeIcon
-                class="is-small mx-3"
-                :class="{ 'has-text-grey' : !link.tracking, 'has-text-success' : link.tracking }"
-                icon="fa-solid fa-chart-line"
-              />
-            </div>
-            <div class="level-item" :title="'Link Defender: ' + link.tracking">
-              <FontAwesomeIcon
-                class="is-small mx-3"
-                :class="{ 'has-text-grey' : !link.defending, 'has-text-success' : link.defending }"
-                icon="fa-solid fa-shield-halved"
-              />
+        <div class="level-right">
+          <div class="level-item is-flex-grow-0">
+            <div class="has-text-grey-light">Created at {{ link.createdAt.toLocaleString() }}</div>
+          </div>
+          <div class="level-item is-flex-grow-0">
+            <div class="level is-mobile">
+              <div class="level-item" :title="'Link Tracking: ' + link.tracking">
+                <FontAwesomeIcon
+                  class="is-small"
+                  :class="{ 'has-text-grey' : !link.tracking, 'has-text-success' : link.tracking }"
+                  icon="fa-solid fa-chart-line"
+                />
+              </div>
+              <div class="level-item" :title="'Link Defender: ' + link.tracking">
+                <FontAwesomeIcon
+                  class="is-small"
+                  :class="{ 'has-text-grey' : !link.defending, 'has-text-success' : link.defending }"
+                  icon="fa-solid fa-shield-halved"
+                />
+              </div>
             </div>
           </div>
         </div>

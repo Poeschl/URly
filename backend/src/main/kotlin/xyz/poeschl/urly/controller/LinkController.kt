@@ -28,7 +28,7 @@ class LinkController(
 
   @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
   fun getAll(): List<LinkDto> {
-    val allLinks = linkRepository.findAll(Sort.by("id"))
+    val allLinks = linkRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"))
     return allLinks.map(linkDtoMapper::toDto)
   }
 
