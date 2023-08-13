@@ -28,7 +28,13 @@ For the backend there are some additional environment variables which needs to b
 * `URLY_PLAUSIBLE_API_HOST` - An custom Plausible api host, if you are not using `https://plausible.io`.
   (This should always include the protocol, like `https://mytrack.example`)
 
-__Note: This setup has no authentication build-in! You need to take care of this by yourself__
+__Note: This setup has no authentication build-in! You need to take care of this by yourself!__
+The paths to exclude from the authentication to make the links public available are:
+
+* `/s/`
+* `/%F0%9F%95%B5`
+* `/img/`
+* `/assets/`
 
 ## Note
 
