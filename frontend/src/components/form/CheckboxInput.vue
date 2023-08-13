@@ -28,12 +28,12 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:value', val: string): void
+  (e: 'update:value', val: boolean): void
 }>()
 
-const value = ref<string>(props.value)
+const value = ref<boolean>(props.value)
 
-watch<string>(() => value.value, (after: string) => {
+watch<boolean>(() => value.value, (after: boolean) => {
   emit('update:value', after)
 })
 </script>

@@ -69,8 +69,8 @@ function closeCreationModal() {
 
 function saveNewLink(link: Link) {
   linkStore.saveLink(link)
-    .then((link: Link) => {
-      const url = window.location.origin + link.redirectPath
+    .then((link: Link | void) => {
+      const url = window.location.origin + (link as Link).redirectPath
       copy(url)
       toast({message: "Copied created link into clipboard.", type: "is-success"})
     })
@@ -79,8 +79,8 @@ function saveNewLink(link: Link) {
 
 function deleteLink(link: Link) {
   linkStore.deleteLink(link)
-    .then((link: Link) => {
-      const url = window.location.origin + link.redirectPath
+    .then((link: Link | void) => {
+      const url = window.location.origin + (link as Link).redirectPath
       copy(url)
       toast({message: "Link successfully deleted.", type: "is-success"})
     })

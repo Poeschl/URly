@@ -38,7 +38,7 @@ const emit = defineEmits<{
   (e: 'update:value', val: string): void
 }>()
 
-const value = ref<string>(props.values.find((button) => button.default).value)
+const value = ref<string>(props.values.find((button) => button.default)?.value || "")
 
 watch<string>(() => value.value, (after: string) => {
   emit('update:value', after)
