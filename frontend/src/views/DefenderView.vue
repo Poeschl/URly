@@ -47,10 +47,10 @@ watch<boolean>(() => imageLoading.value, (after: boolean) => {
 })
 
 const doRedirect = () => {
-  const redirectUrl = String(route.query['🌐']);
-  if (redirectUrl.length > 0) {
+  const redirectUrl = route.query['🌐'];
+  if (redirectUrl != null && redirectUrl.length > 0) {
     console.info("Redirect to " + redirectUrl)
-    window.location.href = redirectUrl;
+    window.location.href = redirectUrl.toString();
   }
 }
 
