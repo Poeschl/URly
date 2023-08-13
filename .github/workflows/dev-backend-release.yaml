@@ -1,5 +1,6 @@
 name: Publish latest backend image
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
