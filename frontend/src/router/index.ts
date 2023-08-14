@@ -12,6 +12,11 @@ const router = createRouter({
       path: "/d/%F0%9F%95%B5", // the encoded 🕵
       name: 'defender',
       component: () => import('../views/DefenderView.vue')
+    },
+    {
+      path: "/e/%F0%9F%95%B8", // the encoded 🕸
+      name: 'notfound',
+      component: () => import('../views/NotFound.vue')
     }
   ]
 })

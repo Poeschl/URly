@@ -41,7 +41,8 @@ For the backend there are some additional environment variables which needs to b
 __Note: This setup has no authentication build-in! You need to take care of this by yourself!__
 The paths to exclude from the authentication to make the links public available are:
 
-* `/s/`
+* `/s/` (Short codes)
+* `/e/` (Errors)
 * `/d/` (Defender)
 * `/img/` (Defender)
 * `/assets/` (Defender)
