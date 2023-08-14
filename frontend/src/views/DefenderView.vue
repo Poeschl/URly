@@ -1,32 +1,33 @@
 <template>
-  <div class="level">
-    <div class="level-item" :class="{ 'glitch': glitch }" ref="pageContainer">
-      <progress v-if="imageLoading" class="progress is-loader is-large is-primary" max="100"></progress>
-      <div v-if="!imageLoading" class="card">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image">
-                <Elipsis/>
-              </figure>
+    <div class="level">
+        <div class="level-item" :class="{ 'glitch': glitch }" ref="pageContainer">
+            <progress v-if="imageLoading" class="progress is-loader is-large is-primary" max="100"></progress>
+            <div v-if="!imageLoading" class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image">
+                                <Elipsis/>
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">The requested page will be "checked"...</p>
+                            <p class="subtitle is-6">In the meantime enjoy this wonderful cat. 😺</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-image">
+                    <figure class="image" :class="{ 'glitch': glitch }">
+                        <img class="is-radiusless" :src="imageToLoad" alt="Cat of this request">
+                    </figure>
+                </div>
+                <div class="is-flex is-justify-content-center p-3">
+                    <p>Presented by <a href="https://github.com/Poeschl/URly">URly</a> and <a href="https://cataas.com">CATAAS</a>
+                    </p>
+                </div>
             </div>
-            <div class="media-content">
-              <p class="title is-4">The requested page will be "checked"...</p>
-              <p class="subtitle is-6">In the meantime enjoy this wonderful cat. 😺</p>
-            </div>
-          </div>
         </div>
-        <div class="card-image">
-          <figure class="image" :class="{ 'glitch': glitch }">
-            <img class="is-radiusless" :src="imageToLoad" alt="Cat of this request">
-          </figure>
-        </div>
-        <div class="is-flex is-justify-content-center p-3">
-          <p>Presented by <a href="https://github.com/Poeschl/URly">URly</a> and <a href="https://cataas.com">CATAAS</a></p>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +35,8 @@ import {useRoute} from "vue-router";
 import {onMounted, ref, watch} from "vue";
 import Elipsis from "@/components/ElipsisSpinner.vue";
 import RedirectionService from "@/services/RedirectionService";
+import type DefenderConfig from "@/models/DefenderConfig";
+import type CheckRequest from "@/models/CheckRequest";
 
 const route = useRoute()
 const redirecionService = new RedirectionService()
@@ -49,19 +52,22 @@ onMounted(() => {
 
 watch<boolean>(() => imageLoading.value, (after: boolean) => {
   if (!after) {
-    setTimeout(doRedirect, getRandomWaitTime(2000, 7000));
+    setTimeout(attemptRedirect, getRandomWaitTime(2000, 7000));
   }
 })
 
-const doRedirect = () => {
+const attemptRedirect = () => {
   const redirectUrl = route.query['🌐'];
-  if (redirectUrl != null && redirectUrl.length > 0) {
+  const id = route.query['⛵'];
+
+  if (redirectUrl != null && redirectUrl.length > 0 && id != null && id.length > 0) {
     const decodedUrl = decodeURI(redirectUrl.toString())
-    redirecionService.checkLink(decodedUrl)
-      .then((exists: boolean) => {
-        if (exists) {
-          console.info("Redirect to " + redirectUrl)
-          window.location.href = redirectUrl.toString();
+    const request: CheckRequest = {id: id.toString(), url: decodedUrl}
+
+    redirecionService.checkLink(request)
+      .then((config: DefenderConfig) => {
+        if (config.allowed) {
+          redirectTo(redirectUrl.toString())
         } else {
           glitch.value = true
         }
@@ -71,6 +77,11 @@ const doRedirect = () => {
         glitch.value = true
       })
   }
+}
+
+const redirectTo = (url: string) => {
+  console.info("Redirect to " + url)
+  window.location.href = url;
 }
 
 const waitForImageToBeLoaded = () => {

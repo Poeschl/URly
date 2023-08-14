@@ -7,12 +7,14 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import xyz.poeschl.urly.enums.LinkType
 import java.time.ZonedDateTime
+import java.util.*
 
 @Repository
 interface LinkRepository : CrudRepository<Link, Long> {
   fun findAll(sort: Sort): List<Link>
 
-  fun existsByOriginalUrlAndDefending(string: String, defending: Boolean = true): Boolean
+  fun findFirstByIdAndOriginalUrl(id: Long, url: String): Optional<Link>
+
 }
 
 @Entity

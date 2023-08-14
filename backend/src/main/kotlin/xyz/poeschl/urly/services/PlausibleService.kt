@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-import xyz.poeschl.urly.dtos.PlausibleInfoDto
+import xyz.poeschl.urly.dtos.PlausibleConfigDto
 
 @Service
 class PlausibleService {
@@ -59,14 +59,14 @@ class PlausibleService {
     }
   }
 
-  fun getPlausibleInfo(): PlausibleInfoDto {
+  fun getPlausibleInfo(): PlausibleConfigDto {
     val dashboardUrl = if (enabled) {
       "$apiHost/$domain"
     } else {
       ""
     }
 
-    return PlausibleInfoDto(enabled, dashboardUrl)
+    return PlausibleConfigDto(enabled, dashboardUrl)
   }
 
   data class PlausibleEvent(

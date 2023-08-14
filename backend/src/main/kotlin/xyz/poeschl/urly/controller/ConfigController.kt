@@ -4,7 +4,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import xyz.poeschl.urly.dtos.PlausibleInfoDto
+import xyz.poeschl.urly.dtos.PlausibleConfigDto
 import xyz.poeschl.urly.services.PlausibleService
 
 @RestController
@@ -14,7 +14,7 @@ class ConfigController(
 ) {
 
   @GetMapping("/plausible", produces = [MediaType.APPLICATION_JSON_VALUE])
-  fun getPlausibleInfo(): PlausibleInfoDto {
+  fun getPlausibleInfo(): PlausibleConfigDto {
     return plausibleService.getPlausibleInfo()
   }
 }
