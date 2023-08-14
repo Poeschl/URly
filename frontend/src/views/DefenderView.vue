@@ -1,33 +1,35 @@
 <template>
-    <div class="level">
-        <div class="level-item" :class="{ 'glitch': glitch }" ref="pageContainer">
-            <progress v-if="imageLoading" class="progress is-loader is-large is-primary" max="100"></progress>
-            <div v-if="!imageLoading" class="card">
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-left">
-                            <figure class="image">
-                                <Elipsis/>
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <p class="title is-4">The requested page will be "checked"...</p>
-                            <p class="subtitle is-6">In the meantime enjoy this wonderful cat. 😺</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-image">
-                    <figure class="image" :class="{ 'glitch': glitch }">
-                        <img class="is-radiusless" :src="imageToLoad" alt="Cat of this request">
-                    </figure>
-                </div>
-                <div class="is-flex is-justify-content-center p-3">
-                    <p>Presented by <a href="https://github.com/Poeschl/URly">URly</a> and <a href="https://cataas.com">CATAAS</a>
-                    </p>
-                </div>
+  <div class="level">
+    <div class="level-item" :class="{ 'glitch': glitch }" ref="pageContainer">
+      <progress v-if="imageLoading" class="progress is-loader is-large is-primary" max="100"></progress>
+      <div v-if="!imageLoading" class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image">
+                <Elipsis/>
+              </figure>
             </div>
+            <div class="media-content">
+              <p class="title is-4">The requested page will be "checked"...</p>
+              <p class="subtitle is-6">In the meantime enjoy this wonderful cat. 😺</p>
+              <p class="subtitle is-6 mt-2" v-if="msDefenderDetected">A Microsoft Defender Referrer is detected.<br/>
+                Optional checks will be done.</p>
+            </div>
+          </div>
         </div>
+        <div class="card-image">
+          <figure class="image" :class="{ 'glitch': glitch }">
+            <img class="is-radiusless" :src="imageToLoad" alt="Cat of this request">
+          </figure>
+        </div>
+        <div class="is-flex is-justify-content-center p-3">
+          <p>Presented by <a href="https://github.com/Poeschl/URly">URly</a> and <a href="https://cataas.com">CATAAS</a>
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -43,10 +45,12 @@ const redirecionService = new RedirectionService()
 
 const imageLoading = ref<boolean>(true)
 const glitch = ref<boolean>(false)
+const msDefenderDetected = ref<boolean>(false)
 
 const imageToLoad = "https://cataas.com/cat/cute"
 
 onMounted(() => {
+  detectSpecialReferrer()
   setTimeout(waitForImageToBeLoaded, getRandomWaitTime(200, 1000));
 })
 
@@ -55,6 +59,14 @@ watch<boolean>(() => imageLoading.value, (after: boolean) => {
     setTimeout(attemptRedirect, getRandomWaitTime(2000, 7000));
   }
 })
+
+const detectSpecialReferrer = () => {
+  const referrer = route.query['🪁'];
+  if (referrer != null && referrer.toString().endsWith('.mcas.ms')) {
+    console.info("Detected Defender referrer")
+    msDefenderDetected.value = true
+  }
+}
 
 const attemptRedirect = () => {
   const redirectUrl = route.query['🌐'];
@@ -67,7 +79,11 @@ const attemptRedirect = () => {
     redirecionService.checkLink(request)
       .then((config: DefenderConfig) => {
         if (config.allowed) {
-          redirectTo(redirectUrl.toString())
+          if (msDefenderDetected.value) {
+            setTimeout(() => redirectTo(redirectUrl.toString()), 3000);
+          } else {
+            redirectTo(redirectUrl.toString())
+          }
         } else {
           glitch.value = true
         }
