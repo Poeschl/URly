@@ -11,6 +11,8 @@ See the features below.
 * Shortens any Link to a short-code with at least 6 characters or to a long one (length of 1024 chars).
 * Allows tracking of the link click via Plausible
 * Defender-Mode - Forwards the user to a few "Checking link" pages. "Like a defender does"
+* And even more annoying Defender mode. This time with removing anchors and adding some query parameters.
+* Special treatment when the referer is the "real" Defender.
 
 ## Defender-Mode for Links
 
