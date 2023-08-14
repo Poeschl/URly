@@ -5,6 +5,7 @@ export default interface Link {
   type: LinkType
   tracking: boolean
   defending: boolean
+  annoyingDefender: boolean
   createdAt: Date
 }
 
@@ -16,6 +17,7 @@ export const createEmptyLink = (): Link => {
     type: LinkType.SHORT,
     tracking: false,
     defending: false,
+    annoyingDefender: false,
     createdAt: new Date()
   }
 }

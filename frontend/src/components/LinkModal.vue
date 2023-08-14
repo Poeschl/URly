@@ -33,7 +33,7 @@
             :checked="false"
             label="Track with Plausible"
             v-model:value="link.tracking"
-            :disabled="!configStore.plausibleConfig.enabled"
+            :disabled="!isTrackingEnabled"
           />
           <CheckboxInput
             help="Should this redirection should use the annoying Defender?"
@@ -41,6 +41,14 @@
             label="Use the Defender page"
             v-model:value="link.defending"
             :disabled="false"/>
+
+          <CheckboxInput
+            help="Should the defender be even more annoying? (this will break anchors and http links)"
+            :checked="false"
+            label="Make the Defender really really annoying"
+            v-model:value="link.annoyingDefender"
+            :disabled="false"
+            v-if="link.defending"/>
 
         </div>
         <div class="card-footer">
@@ -66,7 +74,7 @@
 import TextInput from "@/components/form/TextInput.vue";
 import type Link from "@/models/Link";
 import {LinkType} from "@/models/Link";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 import RadioInput from "@/components/form/RadioInput.vue";
 import CheckboxInput from "@/components/form/CheckboxInput.vue";
 import {useConfigStore} from "@/stores/ConfigStore";
@@ -85,13 +93,18 @@ const emit = defineEmits<{
 const link = ref<Link>(props.link)
 const isTrackingEnabled = computed<boolean>(() => configStore!!.plausibleConfig.enabled)
 
+watch<boolean>(() => link.value.defending, (after: boolean) => {
+  if (!after) {
+    link.value.annoyingDefender = false
+  }
+})
+
 const updateType = (linkType: string) => {
   link.value.type = LinkType[linkType as keyof typeof LinkType]
 }
 const save = () => {
   emit("update:link", link.value)
 }
-
 
 </script>
 

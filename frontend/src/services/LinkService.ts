@@ -17,6 +17,7 @@ export default class LinkService {
               "type": origin.type,
               "tracking": origin.tracking,
               "defending": origin.defending,
+              "annoyingDefender": origin.annoyingDefender,
               "createdAt": new Date(origin.createdAt)
             }
           })
@@ -34,6 +35,7 @@ export default class LinkService {
           "type": link.type,
           "tracking": link.tracking,
           "defending": link.defending,
+          "annoyingDefender": link.annoyingDefender,
           "createdAt": new Date(link.createdAt)
         }
       })

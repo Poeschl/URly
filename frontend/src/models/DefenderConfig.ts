@@ -1,3 +1,4 @@
 export default interface DefenderConfig {
-  allowed: boolean
+  allowed: boolean,
+  annoying: boolean
 }

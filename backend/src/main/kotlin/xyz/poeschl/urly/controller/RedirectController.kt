@@ -82,6 +82,8 @@ class RedirectController(
             Long.MIN_VALUE
         }
         val link = linkRepository.findFirstByIdAndOriginalUrl(id, check.url)
-        return DefenderConfigDto(link.isPresent)
+        return DefenderConfigDto(
+                link.isPresent,
+                link.isPresent && link.map { it.annoyingDefender }.orElse(false))
     }
 }

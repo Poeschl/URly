@@ -48,6 +48,13 @@
                   icon="fa-solid fa-shield-halved"
                 />
               </div>
+              <div class="level-item" :title="'Annoying Defender: ' + link.annoyingDefender" v-if="link.defending">
+                <FontAwesomeIcon
+                  class="is-small"
+                  :class="{ 'has-text-grey' : !link.annoyingDefender, 'has-text-success' : link.annoyingDefender }"
+                  icon="fa-solid fa-skull"
+                />
+              </div>
             </div>
           </div>
         </div>

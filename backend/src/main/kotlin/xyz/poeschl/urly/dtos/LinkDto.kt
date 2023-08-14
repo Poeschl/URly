@@ -7,20 +7,22 @@ import xyz.poeschl.urly.repositories.Link
 import java.time.ZonedDateTime
 
 data class LinkDto(
-  val id: Long,
-  val redirectPath: String,
-  val originalUrl: String,
-  val type: LinkType,
-  val tracking: Boolean,
-  val defending: Boolean,
-  val createdAt: ZonedDateTime
+        val id: Long,
+        val redirectPath: String,
+        val originalUrl: String,
+        val type: LinkType,
+        val tracking: Boolean,
+        val defending: Boolean,
+        val annoyingDefender: Boolean,
+        val createdAt: ZonedDateTime
 )
 
 data class NewLinkDto(
-  val originalUrl: String,
-  val type: LinkType,
-  val tracking: Boolean,
-  val defending: Boolean
+        val originalUrl: String,
+        val type: LinkType,
+        val tracking: Boolean,
+        val defending: Boolean,
+        val annoyingDefender: Boolean
 )
 
 @Mapper

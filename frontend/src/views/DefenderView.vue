@@ -79,11 +79,18 @@ const attemptRedirect = () => {
     redirecionService.checkLink(request)
       .then((config: DefenderConfig) => {
         if (config.allowed) {
-          if (msDefenderDetected.value) {
-            setTimeout(() => redirectTo(redirectUrl.toString()), 3000);
-          } else {
-            redirectTo(redirectUrl.toString())
+          let additionalTimeOut = 0
+          let url = redirectUrl.toString()
+
+          if (config.annoying) {
+            url = transformToAnnoyingUrl(url)
           }
+
+          if (msDefenderDetected.value) {
+            additionalTimeOut += 3000
+          }
+
+          setTimeout(() => redirectTo(url), additionalTimeOut);
         } else {
           glitch.value = true
         }
@@ -115,6 +122,46 @@ const waitForImageToBeLoaded = () => {
       console.error("Couldn't load image!")
     }
   )
+}
+
+const transformToAnnoyingUrl = (url: string): string => {
+  let newUrl = new URL(url)
+
+  newUrl.protocol = "https:"
+
+  if (newUrl.hash.length > 0) {
+    newUrl.hash = "#not-anymore"
+  }
+
+  newUrl.searchParams.set(getRandomEmoji(4), getRandomLetters(32))
+  newUrl.searchParams.set(getRandomLetters(8), getRandomEmoji(8))
+
+  return newUrl.toString()
+}
+
+const getRandomEmoji = (length: number): string => {
+  return getRandomOf(length, [
+    "😺", "😸", "😼", "🙀", "🖥", "😀", "😃", "😄", "🚗", "😁", "😎", "😉", "😱", "🔧", "🔨", "🏠", "😨",
+    "😰", "😥", "😓", "⌚️", "🚢", "💻", "⛳️", "🏹", "🎣", "🤿", "🚴"])
+}
+
+const getRandomLetters = (length: number): string => {
+  return getRandomOf(length, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+}
+
+const getRandomOf = (length: number, characters: string | string[]): string => {
+  let result = '';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    if (typeof characters == 'string') {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    } else {
+      result += characters[(Math.floor(Math.random() * charactersLength))];
+    }
+    counter += 1;
+  }
+  return result;
 }
 
 const getRandomWaitTime = (min: number, max: number): number => {
